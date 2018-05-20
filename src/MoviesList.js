@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import styled from 'styled-components'
 import Movie from './Movie'
 
 const BaseUrl = 'https://api.themoviedb.org/3'
@@ -26,11 +27,18 @@ class MoviesList extends Component {
   render() {
     const { movies } = this.state
     return (
-      <div className="MoviesList">
+      <MovieGrid>
         {movies.map(movie => <Movie key={movie.id} movie={movie} />)}
-      </div>
+      </MovieGrid>
     );
   }
 }
 
 export default MoviesList
+
+const MovieGrid = styled.section.attrs({ className: 'MoviesList'})`
+  display: grid;
+  padding: 1rem;
+  grid-template-columns: repeat(7, 1fr);
+  grid-row-gap: 1rem;
+`
