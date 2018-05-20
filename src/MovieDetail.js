@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Overdrive from 'react-overdrive'
 import styled from 'styled-components'
 
 import { Poster } from './Movie'
@@ -30,12 +31,14 @@ class MovieDetail extends Component {
 
   render() {
     const { movie } = this.state
-    // console.log(movie)
+    console.log('movie', movie)
  
     return (
       <MovieWrapper backdrop={`${BACKDROP_PATH}${movie.backdrop_path}`}>
         <MovieInfo>
-          <Poster src={`${POSTER_PATH}${movie.poster_path}`} alt={movie.title} title={movie.title} />
+          <Overdrive id={movie.id}>
+            <Poster src={`${POSTER_PATH}${movie.poster_path}`} alt={movie.title} title={movie.title} />
+          </Overdrive>	
           <div>
             <h1>{movie.title}</h1>
             <h3>{movie.release_date}</h3>
