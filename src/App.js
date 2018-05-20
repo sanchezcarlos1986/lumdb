@@ -1,42 +1,30 @@
-import React, { Component } from 'react'
+import React from 'react'
+import {
+  BrowserRouter as Router,
+  Link,
+  Route,
+  Switch
+} from 'react-router-dom'
 import logo from './logo.svg'
 import './App.css'
 
-import Movie from './Movie'
+import MoviesList from './MoviesList'
+import MovieDetail from './MovieDetail'
 
-const BaseUrl = 'https://api.themoviedb.org/3'
-const APIKey = 'api_key=bd0a7e9edaf44bb38b9df7f746364dac'
-const APIUrl = `${BaseUrl}/discover/movie?sort_by=popularity.desc&${APIKey}`
-
-class App extends Component {
-
-  state = {
-    movies: []
-  }
-
-  async componentDidMount() {
-    try {
-      const res = await fetch(APIUrl)
-      const movies = await res.json()
-      this.setState({
-        movies: movies.results
-      })    
-    } catch(error) {
-      console.log(`Lo siento, tuvimos un error al cargar las películas: ${error}`)
-    }
-  }
-  
-  render() {
-    const { movies } = this.state
-    return (
-      <div className="App">
-        <header className="App-header">
+const App = () => (
+  <Router>
+    <div className="App">
+      <header className="App-header">
+        <Link to="/">
           <img src={logo} className="App-logo" alt="logo" />
-        </header>
-        {movies.map(movie => <Movie key={movie.id} movie={movie} />)}
-      </div>
-    );
-  }
-}
+        </Link>
+      </header>
+      <Switch>
+        <Route exact path="/" component={MoviesList} />
+        <Route path="/:id" component={MovieDetail} />
+      </Switch>
+    </div>
+  </Router>
+)
 
 export default App
