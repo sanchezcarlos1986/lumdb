@@ -1,36 +1,28 @@
 import React, { Component } from 'react'
 import Overdrive from 'react-overdrive'
 import styled from 'styled-components'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { getMovie, resetMovie } from './actions'
 
 import { Poster } from './Movie'
 
-const BaseUrl = 'https://api.themoviedb.org/3'
-const APIKey = 'api_key=bd0a7e9edaf44bb38b9df7f746364dac'
 const POSTER_PATH = 'http://image.tmdb.org/t/p/w154'
 const BACKDROP_PATH = 'http://image.tmdb.org/t/p/w1280'
 
-class MovieDetail extends Component {
-
-  state = {
-    movie: {}
+class MovieDetail extends Component {  
+  componentDidMount() {
+    const { getMovie, match } = this.props
+    getMovie(match.params.id)
   }
 
-  async componentDidMount() {
-    const id = this.props.match.params.id
-    const APIUrl = `${BaseUrl}/movie/${id}?${APIKey}`
-    try {
-      const res = await fetch(APIUrl)
-      const movie = await res.json()
-      this.setState({ 
-        movie 
-      })
-    } catch (error) {
-      console.log(`Lo siento, tuvimos un error al cargar las películas: ${error}`)
-    }
+  componentWillUnmount() {
+    const { resetMovie } = this.props
+    resetMovie()
   }
 
   render() {
-    const { movie } = this.state
+    const { movie } = this.props
  
     return (
       <MovieWrapper backdrop={`${BACKDROP_PATH}${movie.backdrop_path}`}>
@@ -49,7 +41,18 @@ class MovieDetail extends Component {
   }
 }
 
-export default MovieDetail
+const mapStateToProps = state => ({
+  movie: state.movies.movie,
+  isLoaded: state.movies.movieLoaded
+})
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  getMovie,
+  resetMovie
+}, dispatch)
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(MovieDetail)
 
 const MovieWrapper = styled.article.attrs({ className: 'MovieDetail'})`
   background: url(${props => props.backdrop}) center center / cover no-repeat;
