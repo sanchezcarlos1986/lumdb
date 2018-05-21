@@ -9,6 +9,7 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import logger from 'redux-logger'
+import thunk from 'redux-thunk'
 
 import logo from './logo.svg'
 import './App.css'
@@ -19,7 +20,7 @@ import MoviesList from './MoviesList'
 import MovieDetail from './MovieDetail'
 import Toggle from './Toggle'
 
-const middleware = [logger]
+const middleware = [logger, thunk]
  
 const store = createStore(
   rootReducer,
