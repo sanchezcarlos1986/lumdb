@@ -18,11 +18,13 @@ import rootReducer from './rootReducer'
 import MoviesList from './MoviesList'
 import MovieDetail from './MovieDetail'
 import Toggle from './Toggle'
+
+const middleware = [logger]
  
 const store = createStore(
   rootReducer,
   {},
-  composeWithDevTools(applyMiddleware(logger))
+  composeWithDevTools(applyMiddleware(...middleware))
 )
 
 const App = () => (
