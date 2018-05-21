@@ -7,7 +7,7 @@ const message = (state = initialState, action) => {
 
   switch (type) {
     case 'TOGGLE_MESSAGE':
-      return state  
+      return { ...state, messageVisibility: !state.messageVisibility}  
     default:
       return state
   }
