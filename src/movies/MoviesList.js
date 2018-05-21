@@ -8,12 +8,14 @@ import Movie from './Movie'
 
 class MoviesList extends Component {
   componentDidMount() {
-    const { getMovies } = this.props
-    getMovies()
+    const { getMovies, isLoaded } = this.props
+    !isLoaded && getMovies()
   }
 
   render() {
-    const { movies } = this.props
+    const { movies, isLoaded } = this.props
+    if (!isLoaded) return(<h1>Loading...</h1>)
+
     return (
       <MovieGrid>
         {movies.map(movie => <Movie key={movie.id} movie={movie} />)}
@@ -24,7 +26,8 @@ class MoviesList extends Component {
 
 
 const mapStateToProps = state => ({
-  movies: state.movies.movies
+  movies: state.movies.movies,
+  isLoaded: state.movies.moviesLoaded
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({

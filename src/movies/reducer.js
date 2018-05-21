@@ -1,7 +1,8 @@
 import { GET_MOVIES } from './actions'
 
 const initialState = {
-  movies: []
+  movies: [],
+  moviesLoaded: false
 }
 
 export default (state = initialState, action) => {
@@ -9,7 +10,11 @@ export default (state = initialState, action) => {
 
   switch (type) {
     case GET_MOVIES:
-      return { ...state, movies: payload }    
+      return { 
+        ...state, 
+        movies: payload,
+        moviesLoaded: true
+      }    
     default:
       return state
   }
