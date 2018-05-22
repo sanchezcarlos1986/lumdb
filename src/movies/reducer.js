@@ -13,7 +13,7 @@ export default (state = initialState, action) => {
   switch (type) {
     case GET_MOVIES:
       return { 
-        ...state, 
+        ...state,
         movies: payload,
         moviesLoaded: true
       } 

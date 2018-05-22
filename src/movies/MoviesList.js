@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getMovies } from './actions'
+import PropTypes from 'prop-types'
 
 import Movie from './Movie'
 
@@ -24,6 +25,10 @@ class MoviesList extends Component {
   }
 }
 
+MoviesList.propTypes = {
+  movies: PropTypes.array.isRequired,
+  isLoaded: PropTypes.bool.isRequired
+}
 
 const mapStateToProps = state => ({
   movies: state.movies.movies,
